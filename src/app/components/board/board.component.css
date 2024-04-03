@@ -1,0 +1,224 @@
+.board {
+  padding: 1.5em 1em;
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 800;
+}
+
+.line {
+  display: flex;
+  gap: 0.3em;
+  margin-block: 0.3em;
+}
+
+.ltr-input {
+  width: 2em;
+  height: 2em;
+  background: var(--clr-body-bg);
+  text-align: center;
+  line-height: 2;
+  border: 2px solid var(--clr-border);
+  border-radius: 5px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: var(--clr-text);
+}
+
+.curRow {
+  border: 2px solid var(--clr-border-cur);
+}
+
+.curInput {
+  border-bottom-width: 10px;
+}
+
+.disabledInput {
+  opacity: 0.8;
+}
+
+.rightLocked {
+  background: var(--clr-tile-right);
+  border: none;
+  color: var(--clr-text-tile);
+  /* line-height: 2; */
+}
+
+.right {
+  /* line-height: 2; */
+  animation: rotate-right 0.7s linear forwards;
+}
+
+.halfLocked {
+  background: var(--clr-tile-half);
+  border: none;
+  color: var(--clr-text-tile);
+  /* line-height: 2; */
+}
+
+.half {
+  /* line-height: 2; */
+  animation: rotate-half 0.7s linear forwards;
+}
+
+.wrongLocked {
+  background: var(--clr-tile-wrong); 
+  border: none;
+  color: var(--clr-text-tile);
+  /* line-height: 2; */
+}
+
+.wrong {
+  /* line-height: 2; */
+  animation: rotate-wrong 0.7s linear forwards;
+}
+
+.shake {
+  animation: horizontal-shaking 0.5s linear;
+}
+
+.r1 { animation-delay: 200ms;}
+.r2 { animation-delay: 400ms;}
+.r3 { animation-delay: 600ms;}
+.r4 { animation-delay: 800ms;}
+
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(5px);
+  }
+  40% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  80% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes rotate-right {
+  0% {
+    transform: rotateY(0);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  25% {
+    transform: rotateY(45deg);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  50% {
+    transform: rotateY(90deg);
+    background: var(--clr-tile-right);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  75% {
+    transform: rotateY(45deg);
+    background: var(--clr-tile-right);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  100% {
+    transform: rotateY(0);
+    background: var(--clr-tile-right);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+}
+
+@keyframes rotate-half {
+  0% {
+    transform: rotateY(0);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  25% {
+    transform: rotateY(45deg);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  50% {
+    transform: rotateY(90deg);
+    background: var(--clr-tile-half);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  75% {
+    transform: rotateY(45deg);
+    background: var(--clr-tile-half);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  100% {
+    transform: rotateY(0);
+    background: var(--clr-tile-half);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+}
+
+@keyframes rotate-wrong {
+  0% {
+    transform: rotateY(0);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  25% {
+    transform: rotateY(45deg);
+    background: var(--clr-body-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-border);
+  }
+  50% {
+    transform: rotateY(90deg);
+    background: var(--clr-tile-wrong);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  75% {
+    transform: rotateY(45deg);
+    background: var(--clr-tile-wrong);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+  100% {
+    transform: rotateY(0);
+    background: var(--clr-tile-wrong);
+    color: var(--clr-text-tile);
+    border: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ltr-input {
+    font-size: 1.5rem;
+  }
+
+  .curInput {
+    border-bottom-width: 7px;
+  }
+}
+
+@media (max-width: 375px) {
+  .ltr-input {
+    font-size: 1rem;
+  }
+
+  .curInput {
+    border-bottom-width: 5px;
+  }
+}

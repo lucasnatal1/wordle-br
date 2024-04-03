@@ -1,0 +1,17 @@
+<header>
+  <app-header></app-header>
+</header>
+<div class="container">
+  <!-- <div class="backdrop" *ngIf="(state === 'won' || state === 'lost') && showModal">
+    <div class="modal-end-game">
+      <h2 class="title">{{ state === "won" ? "VITÓRIA" : "DERROTA" }}</h2>
+      <p>{{ word }}</p>
+      <div class="historico">histórico resultados (futuro)</div>
+      <button class="close-btn" (click)="showModal = false">voltar</button>
+    </div>
+  </div> -->
+  <div class="warning-container" [ngStyle]="{ opacity: badInput || state === 'won' || state === 'lost' ? 1 : 0 }">
+    {{ badInput || state === 'won' || state === 'lost' ? message : "-" }}
+  </div>
+  <app-board></app-board>
+</div>

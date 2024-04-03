@@ -1,0 +1,74 @@
+<div class="container">
+  <a class="logo" href="#">
+    <div class="logo-txt">
+      <span class="w">W</span>EIRD<span class="l">L</span
+      ><span class="e">E</span>
+    </div>
+    <!-- <img src="../../../assets/logo-5.png" alt="logo" style="margin-inline: 2rem;"> -->
+  </a>
+  <div class="drop-down-btn" (click)="toggleListVisibility()">
+    {{ ddListVisible ? selectedTheme?.toUpperCase() : "TEMAS" }}
+    <fa-icon
+      [icon]="faChevronDown"
+      class="arrow-down"
+      [ngClass]="{
+        'rotate-arrow-up': ddListVisible,
+        'rotate-arrow-down': ddListVisible === false
+      }"
+    ></fa-icon>
+  </div>
+  <div class="drop-down-btn-sm" (click)="toggleListVisibility()">
+    <fa-icon [icon]="faPalette" *ngIf="!ddListVisible"></fa-icon>
+    <fa-icon
+      [icon]="faSun"
+      *ngIf="ddListVisible && selectedTheme === 'light'"
+    ></fa-icon>
+    <fa-icon
+      [icon]="faMoon"
+      *ngIf="ddListVisible && selectedTheme === 'dark'"
+    ></fa-icon>
+    <fa-icon
+      [icon]="faWater"
+      *ngIf="ddListVisible && selectedTheme === 'ocean'"
+    ></fa-icon>
+    <fa-icon
+      [icon]="faGem"
+      *ngIf="ddListVisible && selectedTheme === 'ruby'"
+    ></fa-icon>
+    <fa-icon
+      class="arrow-down"
+      [ngClass]="{
+        'rotate-arrow-up': ddListVisible,
+        'rotate-arrow-down': ddListVisible === false
+      }"
+      style="margin-inline-start: 3px"
+      [icon]="faChevronDown"
+    ></fa-icon>
+  </div>
+  <div
+    class="drop-down-list-container"
+    [ngClass]="{ expand: ddListVisible, shrink: ddListVisible === false }"
+  >
+    <ul class="drop-down-list">
+      <li id="light" class="drop-down-item" (click)="changeTheme('light')">Light</li>
+      <li id="dark" class="drop-down-item" (click)="changeTheme('dark')">Dark</li>
+      <li id="ocean" class="drop-down-item" (click)="changeTheme('ocean')">Ocean</li>
+      <li id="ruby" class="drop-down-item" (click)="changeTheme('ruby')">Ruby</li>
+    </ul>
+
+    <ul class="drop-down-list-sm">
+      <li id="light-sm" class="drop-down-item" (click)="changeTheme('light')">
+        <fa-icon [icon]="faSun"></fa-icon>
+      </li>
+      <li id="dark-sm" class="drop-down-item" (click)="changeTheme('dark')">
+        <fa-icon [icon]="faMoon"></fa-icon>
+      </li>
+      <li id="ocean-sm" class="drop-down-item" (click)="changeTheme('ocean')">
+        <fa-icon [icon]="faWater"></fa-icon>
+      </li>
+      <li id="ruby-sm" class="drop-down-item" (click)="changeTheme('ruby')">
+        <fa-icon [icon]="faGem"></fa-icon>
+      </li>
+    </ul>
+  </div>
+</div>

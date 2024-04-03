@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+}
+
+.backdrop {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: transparent;
+}
+
+.modal-end-game {
+  margin-block-start: min(20%, 10rem);
+  width: 30%;
+  max-width: 20rem;
+  height: clamp(25rem, 50%, 30rem);
+  border: 5px solid var(--clr-border);
+  border-radius: 5px;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: var(--clr-body-bg);
+  color: var(--clr-text);
+}
+
+.warning-container {
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+  border-radius: 5px;
+  padding: 1em;
+  font-size: 0.875rem;
+  margin-block: 1em;
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.04);
+  text-transform: uppercase;
+}

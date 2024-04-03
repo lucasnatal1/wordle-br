@@ -1,0 +1,31 @@
+<div class="board">
+  <div
+    class="line"
+    *ngFor="let guess of guesses; index as i"
+    [ngClass]="{ shake: badInput && currentGuessNumber === i }"
+  >
+    <div
+      class="ltr-input"
+      [ngClass]="{
+        'rightLocked': guesses[i][j].class === 'right' && currentGuessNumber - 1 !== i,
+        'right': guesses[i][j].class === 'right' && currentGuessNumber - 1 === i,
+        'halfLocked': guesses[i][j].class === 'half' && currentGuessNumber - 1 !== i,
+        'half': guesses[i][j].class === 'half' && currentGuessNumber - 1 === i,
+        'wrongLocked': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 !== i,
+        'wrong': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 === i,
+        'curRow': currentGuessNumber === i && !hasWon,
+        'curInput': currentGuessNumber === i && currentGuess.length === j && !hasWon,
+        'disabledInput': i > currentGuessNumber,
+        'r1': submited && currentGuessNumber - 1 === i && j === 1,
+        'r2': submited && currentGuessNumber - 1 === i && j === 2,
+        'r3': submited && currentGuessNumber - 1 === i && j === 3,
+        'r4': submited && currentGuessNumber - 1 === i && j === 4,
+      }"
+      *ngFor="let letter of guess; index as j"
+    >
+      {{
+        currentGuessNumber === i ? currentGuess.charAt(j) : guesses[i][j].letter
+      }}
+    </div>
+  </div>
+</div>
