@@ -13,6 +13,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   guessesSubscription: Subscription | null = null;
   currentGuessNumberSubscription: Subscription | null = null;
   gameStateSubscription: Subscription | null = null;
+  badInputSubscription: Subscription | null = null;
   guesses = [
     [{class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}],
     [{class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}, {class: '', letter: ''}],
@@ -24,7 +25,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   currentGuess = '';
   currentGuessNumber = 0;
   badInput = false;
-  submited = false;
+  submitted = false;
   hasWon = false;
 
   constructor(private gameService: GameService) {}
@@ -36,6 +37,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     });
     this.guessesSubscription = this.gameService.guessesChanged.subscribe((guesses: {class: string, letter: string}[][]) => {
       this.guesses = guesses;
+      this.triggerRotateAnimation();
       // console.log("guesses", this.guesses);
     });
     this.currentGuessNumberSubscription = this.gameService.currentGuessNumberChanged.subscribe((guessNumber: number) => {
@@ -45,6 +47,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.gameStateSubscription = this.gameService.gameStateChanged.subscribe((state: string) => {
       if (state === 'won') {
         this.hasWon = true;
+      }
+    })
+    this.badInputSubscription = this.gameService.badInputAlert.subscribe((alert: string) => {
+      if (alert.length > 0) {
+        this.triggerShakeAnimation();
       }
     })
   }
@@ -65,16 +72,14 @@ export class BoardComponent implements OnInit, OnDestroy {
     } 
 
     if (event.key === 'Enter') {
-      if (this.badInput || this.submited) {
+      if (this.badInput || this.submitted) {
         return;
       }
       if (!this.gameService.checkValidInput()) {
-        this.triggerShakeAnimation();
         return;
       }
 
       this.gameService.onSubmitWord();
-      this.triggerRotateAnimation();
     }
   }
 
@@ -86,9 +91,9 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   triggerRotateAnimation() {
-    this.submited = true;
+    this.submitted = true;
     setTimeout(() => {
-      this.submited = false;
+      this.submitted = false;
     }, 1500);
   }
 
@@ -97,5 +102,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.guessesSubscription?.unsubscribe();
     this.currentGuessNumberSubscription?.unsubscribe();
     this.gameStateSubscription?.unsubscribe();
+    this.badInputSubscription?.unsubscribe();
   }
 }

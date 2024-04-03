@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div
+      *ngFor="let item of firstRowKeysArray; index as i"
+      (click)="onKeyClick(item.key)"
+      [ngClass]="{'wrong': firstRowKeysArray[i].class === 'wrong', 'half': firstRowKeysArray[i].class === 'half', 'right': firstRowKeysArray[i].class === 'right'}"
+      class="key"
+    >
+      {{ item.key }}
+    </div>
+  </div>
+  <div class="row">
+    <div
+      *ngFor="let item of scndRowKeysArray; index as i"
+      (click)="onKeyClick(item.key)"
+      [ngClass]="{'wrong': scndRowKeysArray[i].class === 'wrong', 'half': scndRowKeysArray[i].class === 'half', 'right': scndRowKeysArray[i].class === 'right'}"
+      class="key"
+    >
+      {{ item.key }}
+    </div>
+    <div (click)="onKeyClick('delete')" class="key big">
+      <fa-icon [icon]="del"></fa-icon>
+    </div>
+  </div>
+  <div class="row">
+    <span class="row">
+      <div
+        *ngFor="let item of trdRowKeysArray; index as i"
+        (click)="onKeyClick(item.key)"
+        [ngClass]="{'wrong': trdRowKeysArray[i].class === 'wrong', 'half': trdRowKeysArray[i].class === 'half', 'right': trdRowKeysArray[i].class === 'right'}"
+        class="key"
+      >
+        {{ item.key }}
+      </div>
+    </span>
+    <span>
+      <div (click)="onKeyClick('enter')" class="key">enter</div>
+    </span>
+  </div>
+</div>

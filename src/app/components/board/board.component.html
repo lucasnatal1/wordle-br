@@ -16,10 +16,10 @@
         'curRow': currentGuessNumber === i && !hasWon,
         'curInput': currentGuessNumber === i && currentGuess.length === j && !hasWon,
         'disabledInput': i > currentGuessNumber,
-        'r1': submited && currentGuessNumber - 1 === i && j === 1,
-        'r2': submited && currentGuessNumber - 1 === i && j === 2,
-        'r3': submited && currentGuessNumber - 1 === i && j === 3,
-        'r4': submited && currentGuessNumber - 1 === i && j === 4,
+        'r1': submitted && currentGuessNumber - 1 === i && j === 1,
+        'r2': submitted && currentGuessNumber - 1 === i && j === 2,
+        'r3': submitted && currentGuessNumber - 1 === i && j === 3,
+        'r4': submitted && currentGuessNumber - 1 === i && j === 4,
       }"
       *ngFor="let letter of guess; index as j"
     >
