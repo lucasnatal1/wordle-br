@@ -55,13 +55,15 @@ export class GameService {
       { class: '', letter: '' },
     ],
   ];
-  public currentGuessChanged = new Subject<string>();
-  private currentGuess: string = '';
+  public currentGuessChanged = new Subject<string[]>();
+  private currentGuess: string[] = ['', '', '', '', ''];
   public currentGuessNumberChanged = new Subject<number>();
   private currentGuessNumber: number = 0;
   public gameStateChanged = new Subject<string>();
   private gameState: 'won' | 'lost' | 'ongoing' = 'ongoing';
   public badInputAlert = new Subject<string>();
+  private letterIndex: number = 0
+  public letterIndexChanged = new Subject<number>();
 
   constructor() {}
 
@@ -78,7 +80,6 @@ export class GameService {
 
   private generateWord(): string {
     const word = words[Math.floor(Math.random() * words.length)];
-    console.log(word);
     return word;
   }
 
@@ -100,28 +101,30 @@ export class GameService {
     return this.gameState === 'ongoing';
   }
 
-  public onDeleteLastLetter(): void {
-    this.currentGuess = this.currentGuess.slice(0, this.currentGuess.length - 1);
-    this.currentGuessChanged.next(this.currentGuess.slice());
+  public updateLetterIndex(index: number) {
+    this.letterIndex = index;
+    this.letterIndexChanged.next(this.letterIndex);
   }
 
-  public onAddLetter(letter: string): void {
-    if (this.currentGuess.length >= this.WORD_LENGTH) {
-      return;
-    }
-    this.currentGuess += letter.toLowerCase();
-    this.currentGuessChanged.next(this.currentGuess.slice());
+  public onDeleteLetter(index: number): void {
+    this.currentGuess[index] = '';
+    this.currentGuessChanged.next(JSON.parse(JSON.stringify(this.currentGuess)));
+  }
+
+  public onAddLetter(letter: string, index: number): void {
+    this.currentGuess[index] = letter;
+    this.currentGuessChanged.next(JSON.parse(JSON.stringify(this.currentGuess)));
   }
 
   public checkValidInput(): boolean {
-    if (this.currentGuess.length < this.WORD_LENGTH) {
+    if (this.currentGuess.includes('')) {
       this.badInputAlert.next('Faltam letras');
       setTimeout(() => {
         this.badInputAlert.next('');
       }, 1000);
       return false;
     }
-    if (!wordsNormalized.includes(this.currentGuess)) {
+    if (!wordsNormalized.includes(this.currentGuess.join(''))) {
       this.badInputAlert.next('Palavra não está na lista');
       setTimeout(() => {
         this.badInputAlert.next('');
@@ -135,36 +138,36 @@ export class GameService {
     this.currentGuessNumber += 1;
     this.currentGuessNumberChanged.next(this.currentGuessNumber);
     let wordArray = this.getCorrectWordNormalized().split('');
-    let currentGuessArray = this.currentGuess.split('');
+    let currentGuessCopy = JSON.parse(JSON.stringify(this.currentGuess));
     for (let i = 0; i < this.WORD_LENGTH; i++) {
-      this.guesses[this.currentGuessNumber-1][i].letter = this.currentGuess.charAt(i);
+      this.guesses[this.currentGuessNumber-1][i].letter = this.currentGuess[i];
       if (
-        this.currentGuess.charAt(i) ===
-        this.getCorrectWordNormalized().charAt(i)
+        currentGuessCopy[i] ===
+        wordArray[i]
       ) {
         this.guesses[this.currentGuessNumber-1][i].class = 'right';
         wordArray[i] = '1';
-        currentGuessArray[i] = '1';
+        currentGuessCopy[i] = '1';
       } else if (
-        !this.getCorrectWordNormalized().includes(this.currentGuess.charAt(i))
+        !wordArray.includes(currentGuessCopy[i])
       ) {
         this.guesses[this.currentGuessNumber-1][i].class = 'wrong';
-        currentGuessArray[i] = '1';
+        currentGuessCopy[i] = '1';
       }
     }
     // cases half
-    for (let i = 0; i < currentGuessArray.length; i++) {
-      if (currentGuessArray[i] === '1') {
+    for (let i = 0; i < currentGuessCopy.length; i++) {
+      if (currentGuessCopy[i] === '1') {
         //1 is treated
         continue;
       }
-      if (wordArray.includes(currentGuessArray[i])) {
+      if (wordArray.includes(currentGuessCopy[i])) {
         this.guesses[this.currentGuessNumber-1][i].class = 'half';
-        wordArray[wordArray.indexOf(currentGuessArray[i])] = '1';
+        wordArray[wordArray.indexOf(currentGuessCopy[i])] = '1';
       } else {
         this.guesses[this.currentGuessNumber-1][i].class = 'wrong';
       }
-      currentGuessArray[i] = '1';
+      currentGuessCopy[i] = '1';
     }
 
     this.checkResult();
@@ -172,9 +175,10 @@ export class GameService {
   }
 
   private checkResult(): void {
-    if (this.currentGuess === this.getCorrectWordNormalized()) {
-      this.currentGuess = '';
-      this.currentGuessChanged.next(this.currentGuess.slice());
+
+    if (this.currentGuess.join('') === this.getCorrectWordNormalized()) {
+      this.currentGuess = ['', '', '', '', ''];
+      this.currentGuessChanged.next(JSON.parse(JSON.stringify(this.currentGuess)));
       for (let i = 0; i < this.WORD_LENGTH; i++) {
         this.guesses[this.currentGuessNumber-1][i].letter = this.correctWord.charAt(i);
       }
@@ -182,12 +186,15 @@ export class GameService {
       this.gameStateChanged.next(this.gameState.slice());
       return;
     }
+
     if (this.currentGuessNumber >= this.MAX_GUESSES) {
       this.gameState = 'lost';
       this.gameStateChanged.next(this.gameState.slice());
       return;
     }
-    this.currentGuess = '';
-    this.currentGuessChanged.next(this.currentGuess.slice());
+
+    this.currentGuess = ['', '', '', '', ''];
+    this.currentGuessChanged.next(JSON.parse(JSON.stringify(this.currentGuess)));
+    this.updateLetterIndex(0);
   }
 }

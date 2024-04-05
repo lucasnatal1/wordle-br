@@ -14,7 +14,7 @@
         'wrongLocked': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 !== i,
         'wrong': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 === i,
         'curRow': currentGuessNumber === i && !hasWon,
-        'curInput': currentGuessNumber === i && currentGuess.length === j && !hasWon,
+        'curInput': currentGuessNumber === i && letterIndex === j && !hasWon,
         'disabledInput': i > currentGuessNumber,
         'r1': submitted && currentGuessNumber - 1 === i && j === 1,
         'r2': submitted && currentGuessNumber - 1 === i && j === 2,
@@ -22,9 +22,10 @@
         'r4': submitted && currentGuessNumber - 1 === i && j === 4,
       }"
       *ngFor="let letter of guess; index as j"
+      (click)="onTileClick(j)"
     >
       {{
-        currentGuessNumber === i ? currentGuess.charAt(j) : guesses[i][j].letter
+        currentGuessNumber === i ? currentGuess[j] : guesses[i][j].letter
       }}
     </div>
   </div>
