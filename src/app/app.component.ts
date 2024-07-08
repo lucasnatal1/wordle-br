@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.word = this.gameService.getCorrectWord();
     this.gameService.gameStateChanged.subscribe((state: string) => {
       setTimeout(() => {this.state = state;}, 1700);
       if (state === 'won') {
@@ -32,5 +31,7 @@ export class AppComponent implements OnInit {
       this.message = msg;
       this.badInput = this.message.length > 0;
     });
+
+    this.word = this.gameService.getCorrectWord();
   }
 }

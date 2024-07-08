@@ -56,6 +56,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.letterIndexSubscription = this.gameService.letterIndexChanged.subscribe((index: number) => {
       this.letterIndex = index;
     })
+
+    this.gameService.loadTodayGame();
   }
 
   onTileClick(index: number) {

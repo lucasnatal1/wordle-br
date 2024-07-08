@@ -42,12 +42,13 @@ export class KeyboardComponent implements OnInit, OnDestroy {
     this.letterIndexSubscription = this.gameService.letterIndexChanged.subscribe((index: number) => {
       this.letterIndex = index;
     })
+
+    // this.gameService.loadTodayGame();
   }
 
   updateKeyBoard(guesses: {class: string, letter: string}[][]) {
     const lettersInWord = 5;
     let isLetterUpdated = false;
-    console.log(this.currentGuessNumber);
     for (let i = 0; i < lettersInWord; i++) {
       isLetterUpdated = false;
       let guessClassPower = guesses[this.currentGuessNumber-1][i].class === 'right' ? 3 : 
