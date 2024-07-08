@@ -79,8 +79,23 @@ export class GameService {
   }
 
   private generateWord(): string {
-    const word = words[Math.floor(Math.random() * words.length)];
+    // const word = words[Math.floor(Math.random() * words.length)];
+    const word = words[this.seededRandom()];
+    console.log(word);
     return word;
+  }
+
+  private seededRandom(): number {
+    const date = new Date().toLocaleDateString('pt-br');
+    const dmy = date.split('/');
+    const nuDay = +dmy[0];
+    const nuMonth = +dmy[1];
+    const nuYear = +dmy[2];
+    const seed = nuDay * nuMonth * (nuYear/1000);
+    var x = Math.sin(seed) * 10000;
+    x = x - Math.floor(x);
+    x = Math.floor(x * 10000);
+    return x % words.length;
   }
 
   public getCorrectWordNormalized(): string {

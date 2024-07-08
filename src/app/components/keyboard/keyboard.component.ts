@@ -99,10 +99,10 @@ export class KeyboardComponent implements OnInit, OnDestroy {
 
     if (key === 'delete') {
       this.gameService.onDeleteLetter(this.letterIndex);
-      // if (this.letterIndex > 0) {
-      //   this.letterIndex -= 1;
-      //   this.gameService.updateLetterIndex(this.letterIndex);
-      // }
+      if (this.letterIndex > 0) {
+        this.letterIndex -= 1;
+        this.gameService.updateLetterIndex(this.letterIndex);
+      }
       return;
     }
 

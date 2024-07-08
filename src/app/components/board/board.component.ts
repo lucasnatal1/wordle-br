@@ -78,9 +78,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     if (event.key === 'Backspace' || event.key === 'Delete') {
       this.gameService.onDeleteLetter(this.letterIndex);
-      // if (event.key === 'Backspace') {
-      //   this.moveLeft();
-      // }
+      if (event.key === 'Backspace') {
+        this.moveLeft();
+      }
       return;
     }
 
