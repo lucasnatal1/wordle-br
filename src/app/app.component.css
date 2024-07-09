@@ -1,3 +1,8 @@
+header {
+  position: relative;
+  z-index: 1000;
+}
+
 .container {
   display: flex;
   flex-direction: column;

@@ -26,12 +26,21 @@
   color: var(--clr-text);
 }
 
+.ltr-input-sm {
+  margin-inline: 0.15rem;
+  cursor: default;
+}
+
 .curRow {
   border: 2px solid var(--clr-border-cur);
 }
 
 .curInput {
   border-bottom-width: 10px;
+}
+
+.curInput-sm {
+  border-color: var(--clr-text-tile);
 }
 
 .disabledInput {

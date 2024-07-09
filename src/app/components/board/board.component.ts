@@ -29,10 +29,12 @@ export class BoardComponent implements OnInit, OnDestroy {
   submitted = false;
   hasWon = false;
   letterIndex = 0;
+  innerWidth = -1;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
     this.currentGuessSubscription = this.gameService.currentGuessChanged.subscribe((guess: string[]) => {
       this.currentGuess = guess;
     });

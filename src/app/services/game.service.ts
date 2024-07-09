@@ -186,6 +186,7 @@ export class GameService {
 
     this.checkResult();
     this.guessesChanged.next(JSON.parse(JSON.stringify(this.guesses))); //copy
+    this.saveTodayGame();
   }
 
   private checkResult(): void {
@@ -200,14 +201,12 @@ export class GameService {
       }
       this.gameState = 'won';
       this.gameStateChanged.next(this.gameState.slice());
-      this.saveTodayGame();
       return;
     }
 
     if (this.currentGuessNumber >= this.MAX_GUESSES) {
       this.gameState = 'lost';
       this.gameStateChanged.next(this.gameState.slice());
-      this.saveTodayGame();
       return;
     }
 

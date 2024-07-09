@@ -1,4 +1,58 @@
-<div class="board">
+<div class="board" *ngIf="innerWidth < 768">
+  <div
+    class="line"
+    *ngFor="let guess of guesses; index as i"
+    [ngClass]="{ shake: badInput && currentGuessNumber === i }"
+  >
+    <div *ngIf="i < currentGuessNumber">
+      <input
+        class="ltr-input ltr-input-sm"
+        [ngClass]="{
+          'rightLocked': guesses[i][j].class === 'right' && currentGuessNumber - 1 !== i,
+          'right': guesses[i][j].class === 'right' && currentGuessNumber - 1 === i,
+          'halfLocked': guesses[i][j].class === 'half' && currentGuessNumber - 1 !== i,
+          'half': guesses[i][j].class === 'half' && currentGuessNumber - 1 === i,
+          'wrongLocked': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 !== i,
+          'wrong': guesses[i][j].class === 'wrong' && currentGuessNumber - 1 === i,
+          'r1': submitted && currentGuessNumber - 1 === i && j === 1,
+          'r2': submitted && currentGuessNumber - 1 === i && j === 2,
+          'r3': submitted && currentGuessNumber - 1 === i && j === 3,
+          'r4': submitted && currentGuessNumber - 1 === i && j === 4,
+        }"
+        *ngFor="let letter of guess; index as j"
+        [(ngModel)]="guesses[i][j].letter"
+        maxlength="1"
+        disabled
+      />
+    </div>
+
+    <div *ngIf="i == currentGuessNumber">
+      <input
+        class="ltr-input ltr-input-sm"
+        style="cursor: pointer;"
+        [ngClass]="{
+          'curRow': currentGuessNumber === i && !hasWon,
+          'curInput-sm': currentGuessNumber === i && letterIndex === j && !hasWon,
+        }"
+        *ngFor="let letter of guess; index as j"
+        [(ngModel)]="currentGuess[j]"
+        (click)="onTileClick(j)"
+        maxlength="1"
+      />
+    </div>
+
+    <div *ngIf="i > currentGuessNumber">
+      <input
+        class="ltr-input ltr-input-sm"
+        *ngFor="let letter of guess; index as j"
+        maxlength="1"
+        disabled
+      />
+    </div>
+  </div>
+</div>
+
+<div class="board" *ngIf="innerWidth >= 768">
   <div
     class="line"
     *ngFor="let guess of guesses; index as i"
@@ -24,9 +78,10 @@
       *ngFor="let letter of guess; index as j"
       (click)="onTileClick(j)"
     >
-      {{
-        currentGuessNumber === i ? currentGuess[j] : guesses[i][j].letter
-      }}
+    {{
+      currentGuessNumber === i ? currentGuess[j] : guesses[i][j].letter
+    }}
     </div>
   </div>
 </div>
+
