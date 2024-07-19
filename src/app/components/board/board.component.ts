@@ -73,25 +73,28 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     if (event.key === 'ArrowLeft') {
-      this.moveLeft();
+      this.gameService.moveLeft();
+      return;
     }
 
     if (event.key === 'ArrowRight') {
-      this.moveRight();
+      this.gameService.moveRight();
+      return;
     }
 
-    if (event.key === 'Backspace' || event.key === 'Delete') {
-      this.gameService.onDeleteLetter(this.letterIndex);
-      if (event.key === 'Backspace') {
-        this.moveLeft();
-      }
+    if (event.key === 'Backspace') {
+      this.gameService.onDeleteLetter(this.letterIndex, true);
+      return;
+    }
+
+    if (event.key === 'Delete') {
+      this.gameService.onDeleteLetter(this.letterIndex, false);
       return;
     }
 
     const isLetter = event.keyCode >= 65 && event.keyCode <= 90;
     if (isLetter) {
       this.gameService.onAddLetter(event.key, this.letterIndex);
-      this.moveRight();
       return;
     } 
 
@@ -104,20 +107,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
 
       this.gameService.onSubmitWord();
-    }
-  }
-
-  moveLeft() {
-    if (this.letterIndex > 0) {
-      this.letterIndex -= 1;
-      this.gameService.updateLetterIndex(this.letterIndex);
-    }
-  }
-
-  moveRight() {
-    if (this.letterIndex < 4) {
-      this.letterIndex += 1;
-      this.gameService.updateLetterIndex(this.letterIndex);
     }
   }
 

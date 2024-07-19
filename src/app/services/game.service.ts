@@ -120,11 +120,39 @@ export class GameService {
     this.letterIndexChanged.next(this.letterIndex);
   }
 
-  public onDeleteLetter(index: number): void {
+  public moveLeft() {
+    if (this.letterIndex > 0) {
+      this.letterIndex -= 1;
+      this.updateLetterIndex(this.letterIndex);
+    }
+  }
+
+  public moveRight() {
+    if (this.letterIndex < 4) {
+      this.letterIndex += 1;
+      this.updateLetterIndex(this.letterIndex);
+    }
+  }
+
+  private moveRightToEmptySpace() {
+    if (this.letterIndex >= 4) {
+      return;
+    }
+    for (let i = this.letterIndex + 1; i <= 4; i++) {
+      if (this.currentGuess[i] === '') {
+        this.letterIndex = i;
+        this.updateLetterIndex(this.letterIndex);
+        return;
+      }
+    }
+  }
+
+  public onDeleteLetter(index: number, bsFlag: boolean): void {
     this.currentGuess[index] = '';
     this.currentGuessChanged.next(
       JSON.parse(JSON.stringify(this.currentGuess))
     );
+    if (bsFlag) { this.moveLeft(); }
   }
 
   public onAddLetter(letter: string, index: number): void {
@@ -132,6 +160,7 @@ export class GameService {
     this.currentGuessChanged.next(
       JSON.parse(JSON.stringify(this.currentGuess))
     );
+    this.moveRightToEmptySpace();
   }
 
   public checkValidInput(): boolean {

@@ -99,11 +99,7 @@ export class KeyboardComponent implements OnInit, OnDestroy {
     }
 
     if (key === 'delete') {
-      this.gameService.onDeleteLetter(this.letterIndex);
-      if (this.letterIndex > 0) {
-        this.letterIndex -= 1;
-        this.gameService.updateLetterIndex(this.letterIndex);
-      }
+      this.gameService.onDeleteLetter(this.letterIndex, true);
       return;
     }
 
@@ -120,10 +116,6 @@ export class KeyboardComponent implements OnInit, OnDestroy {
     }
 
     this.gameService.onAddLetter(key, this.letterIndex);
-    if (this.letterIndex < 4) {
-      this.letterIndex += 1;
-      this.gameService.updateLetterIndex(this.letterIndex);
-    }
   }
 
   awaitShakeAnimation() {
