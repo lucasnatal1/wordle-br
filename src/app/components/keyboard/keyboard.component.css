@@ -25,12 +25,11 @@
   border-radius: 5px;
   text-transform: uppercase;
   cursor: pointer;
-  min-width: 2em;
-  height: 2.5em;
-  line-height: 2.5;
-  padding-inline: 5px;
+  width: clamp(1.5em, 5vw, 2em);
+  height: clamp(2em, 5vw, 2.5em);
+  line-height: clamp(2em, 5vw, 2.5em);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: clamp(.75rem, 3vw, 1.5rem);
   color: var(--clr-text);
   text-align: center;
 }

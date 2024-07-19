@@ -47,9 +47,3 @@ header {
   background: rgba(255, 255, 255, 0.04);
   text-transform: uppercase;
 }
-
-@media (max-width: 768px) {
-  app-keyboard {
-    display: none;
-  }
-}
